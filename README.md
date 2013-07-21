@@ -8,3 +8,9 @@ of coins to make change for an integer amount of money in pennies. Duplicates co
 
 **Example:** The minimum coins to make change for 6 out of the set of coins [4, 3, 1] is [3, 3].
 
+
+### Implement some Enumerable methods
+
+**Problem:** How are some common methods from the Enumerable module imeplemented?
+
+**Example:** `#each`, `#map`
