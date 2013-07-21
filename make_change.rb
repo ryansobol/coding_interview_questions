@@ -1,49 +1,51 @@
-# Minimal Number of Coins for Change
+# Find the Minimum Coins for Change
 #
-# Problem: Given a sorted set of currency, please implement a method which returns the minimal set
-# of coins to make change for an amount of money in pennies. Duplicate coins are fine.
-# 
-# Example: The minimal number of coins to make change for 6 out of the set of coins  [1, 3, 4] is 
-# [3, 3].
+# Solution: An iterative, dynamic programming algorithm 
+#
+# See: http://en.wikipedia.org/wiki/Dynamic_programming
 
 class Integer
   def make_change(*coins)
-    bests = Array.new(self + 1, [])
+    # create an array for memoizing the best coins for every value from 0 to self
+    best_coins = Array.new(self + 1, [])
 
-    # for each integer up to self
-    for i in 1..self do
+    # for each positive integer up to self
+    for value in 1..self do
 
       # for each coin
       coins.each do |coin|
 
-        # for each previous best combo
-        for j in 0...i do
+        # for each previous best coins (not including the current value)
+        for j in 0...value do
 
-          # duplicate the previous best combo and add the current coin to it
-          combo = bests[j].dup << coin
+          # create a duplicate of the previous best coins for the current value
+          previous_best_coins = best_coins[j].dup
 
-          # keep going as long as the current combo's coins equal the current self
-          if combo.reduce(:+) == i
+          # add the current coin to the previous best coins (this is now the test coins)
+          test_coins = previous_best_coins << coin
 
-            # if the current self's "best" combo is no coins (aka the default)
-            if bests[i].empty?
+          # continue as long as the test coins' value is equal the current value
+          if test_coins.reduce(:+) == value
 
-              # then we have our first best combo
-              bests[i] = combo
+            # if the current value's "best" coins are no coins (aka the default)
+            if best_coins[value].empty?
 
-              # otherwise, if the current combo's size is smaller or equal the current best combo
-            elsif combo.size <= bests[i].size
+              # then we have found the initial best coins for the current value
+              best_coins[value] = test_coins
 
-              # then we have a better combo
-              bests[i] = combo
+              # but, if the test coins' size is smaller than the current value's best coins' size
+            elsif test_coins.size < best_coins[value].size
+
+              # then we have found even better best coins for the current value
+              best_coins[value] = test_coins
             end
           end
         end
       end
     end
 
-    # return the best combo for the initial self
-    bests[self]
+    # return the best coins for self
+    best_coins[self]
   end
 end
 
