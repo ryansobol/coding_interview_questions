@@ -16,10 +16,10 @@ class Integer
       coins.each do |coin|
 
         # for each previous best coins (not including the current value)
-        for j in 0...value do
+        for prev_value in 0...value do
 
           # create a duplicate of the previous best coins for the current value
-          previous_best_coins = best_coins[j].dup
+          previous_best_coins = best_coins[prev_value].dup
 
           # add the current coin to the previous best coins (this is now the test coins)
           test_coins = previous_best_coins << coin
