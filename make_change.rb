@@ -6,7 +6,7 @@
 
 class Integer
   def make_change(*coins)
-    # create an array to memoizing the best coins for every value from 0 to self
+    # create an array to memoize the best coins for every value from 0 to self
     best_coins = Array.new(self + 1)
 
     # seed the zeroth value's best coins with an empty array
