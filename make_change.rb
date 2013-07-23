@@ -6,8 +6,11 @@
 
 class Integer
   def make_change(*coins)
-    # create an array for memoizing the best coins for every value from 0 to self
-    best_coins = Array.new(self + 1, [])
+    # create an array to memoizing the best coins for every value from 0 to self
+    best_coins = Array.new(self + 1)
+
+    # seed the zeroth value's best coins with an empty array
+    best_coins[0] = []
 
     # for each positive integer up to self
     for value in 1..self do
@@ -27,8 +30,8 @@ class Integer
           # continue as long as the test coins' value is equal the current value
           if test_coins.reduce(:+) == value
 
-            # if the current value's "best" coins are no coins (aka the default)
-            if best_coins[value].empty?
+            # if there are no best coins for the the current value
+            if best_coins[value].nil?
 
               # then we have found the initial best coins for the current value
               best_coins[value] = test_coins
